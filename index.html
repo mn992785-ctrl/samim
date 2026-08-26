@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WatchWin Demo</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f6f5fb;color:#17151f}
+.app{max-width:430px;margin:auto;min-height:100vh;background:#f8f7fc;padding-bottom:82px}
+.header{background:linear-gradient(135deg,#4d19ed,#7a32f5);color:#fff;padding:28px 20px 24px;border-radius:0 0 28px 28px}
+.brand{font-size:30px;font-weight:800;text-align:center}.brand span{color:#ffd33d}.tag{text-align:center;margin-top:3px;opacity:.9}
+.balance{margin-top:22px;background:#24105e;border-radius:22px;padding:20px}.small{opacity:.8;font-size:14px}.money{font-size:34px;font-weight:800;margin:6px 0}.actions{display:flex;gap:10px;margin-top:15px}.btn{border:0;border-radius:13px;padding:12px 15px;font-weight:700;cursor:pointer}.white{background:#fff;color:#5220e9;flex:1}.purple{background:#6d25ed;color:#fff;flex:1}
+.content{padding:18px}.stats{display:flex;background:#fff;border-radius:20px;padding:16px;gap:10px;box-shadow:0 4px 18px #0000000b}.stat{flex:1;text-align:center}.stat b{display:block;color:#5a20e8;font-size:18px;margin-top:5px}.ref{margin-top:16px;background:linear-gradient(100deg,#5d1bea,#a54df8);color:#fff;border-radius:18px;padding:18px}.ref button{margin-top:10px;background:#fff;color:#5b20df}.section{display:flex;justify-content:space-between;align-items:center;margin:24px 0 10px}.task{background:#fff;border-radius:18px;padding:15px;margin:10px 0;display:flex;align-items:center;gap:12px;box-shadow:0 4px 16px #00000008}.icon{width:48px;height:48px;border-radius:14px;background:#efe8ff;display:grid;place-items:center;font-size:23px}.taskmain{flex:1}.taskmain b{display:block}.reward{color:#15a44a;font-weight:800}.watchbtn{background:#6521e8;color:#fff;border:0;border-radius:11px;padding:9px 12px;font-weight:700}.page{display:none}.page.active{display:block}.card{background:#fff;border-radius:18px;padding:18px;margin:12px 0}.input{width:100%;padding:13px;border:1px solid #ddd;border-radius:12px;margin:8px 0}.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);max-width:430px;width:100%;background:#fff;border-top:1px solid #eee;display:flex;justify-content:space-around;padding:11px 5px 9px;z-index:5}.nav button{border:0;background:none;color:#777;font-weight:700;font-size:12px}.nav button.active{color:#5c20e8}.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#222;color:#fff;padding:12px 18px;border-radius:12px;display:none}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <div class="brand">Watch<span>Win</span></div>
+    <div class="tag">Watch • Earn • Reward</div>
+    <div class="balance">
+      <div class="small">Total Balance</div>
+      <div class="money">৳ <span id="balance">0.00</span></div>
+      <div class="small">Demo balance — real money is not paid in this demo</div>
+      <div class="actions">
+        <button class="btn white" onclick="show('wallet')">My Wallet</button>
+        <button class="btn purple" onclick="show('withdraw')">Withdraw</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <section id="home" class="page active">
+      <div class="stats">
+        <div class="stat"><div class="small">Today's Earnings</div><b>৳ <span id="today">0</span></b></div>
+        <div class="stat"><div class="small">Points</div><b><span id="points">0</span></b></div>
+        <div class="stat"><div class="small">Referrals</div><b>0</b></div>
+      </div>
+      <div class="ref">
+        <b>Refer Friends & Earn More</b>
+        <div style="margin-top:5px">বন্ধুকে আমন্ত্রণ করে রিওয়ার্ড পাওয়ার ব্যবস্থা এখানে থাকবে।</div>
+        <button class="btn" onclick="show('refer')">Invite Now</button>
+      </div>
+      <div class="section"><h3>Available Tasks</h3><span style="color:#5c20e8">View All</span></div>
+      <div class="task"><div class="icon">🎬</div><div class="taskmain"><b>Watch Video</b><span class="small">Demo video task</span><div class="reward">+500 points</div></div><button class="watchbtn" onclick="watch()">Watch</button></div>
+      <div class="task"><div class="icon">🎁</div><div class="taskmain"><b>Daily Bonus</b><span class="small">Daily reward</span><div class="reward">+100 points</div></div><button class="watchbtn" onclick="bonus()">Claim</button></div>
+    </section>
+
+    <section id="watch" class="page">
+      <div class="section"><h2>🎬 Watch & Earn</h2></div>
+      <div class="card"><h3>Demo Rewarded Video</h3><p class="small">এটি শুধু ডেমো। আসল বিজ্ঞাপন/রিওয়ার্ড SDK পরে যুক্ত করতে হবে।</p><button class="btn purple" onclick="watch()">▶ Watch Video</button></div>
+    </section>
+
+    <section id="wallet" class="page">
+      <div class="section"><h2>💰 Wallet</h2></div>
+      <div class="card"><div class="small">Available Balance</div><div class="money">৳ <span id="balance2">0.00</span></div><p>Points: <b id="points2">0</b></p></div>
+      <div class="card"><b>Transaction History</b><p class="small" id="history">এখনও কোনো লেনদেন নেই।</p></div>
+    </section>
+
+    <section id="withdraw" class="page">
+      <div class="section"><h2>💸 Withdraw</h2></div>
+      <div class="card"><p>Demo withdrawal screen</p><input class="input" placeholder="bKash/Nagad নম্বর"><input class="input" placeholder="Amount"><button class="btn purple" onclick="toast('ডেমো: Withdraw request তৈরি হয়েছে')">Submit Request</button><p class="small">বাস্তব পেমেন্ট চালুর আগে অনুমোদিত payment integration ও backend লাগবে।</p></div>
+    </section>
+
+    <section id="refer" class="page">
+      <div class="section"><h2>👥 Refer & Earn</h2></div>
+      <div class="card"><p>তোমার Referral Code</p><input class="input" value="WATCHWIN2026" readonly><button class="btn purple" onclick="navigator.clipboard?.writeText('WATCHWIN2026');toast('Referral code copied')">Copy Code</button></div>
+    </section>
+
+    <section id="profile" class="page">
+      <div class="section"><h2>👤 Profile</h2></div>
+      <div class="card"><p><b>Demo User</b></p><p class="small">Account settings ও নিরাপত্তা ব্যবস্থা এখানে থাকবে।</p></div>
+    </section>
+  </div>
+
+  <div class="nav">
+    <button class="active" onclick="show('home',this)">🏠<br>Home</button>
+    <button onclick="show('watch',this)">🎬<br>Watch</button>
+    <button onclick="show('wallet',this)">💰<br>Wallet</button>
+    <button onclick="show('refer',this)">👥<br>Refer</button>
+    <button onclick="show('profile',this)">👤<br>Profile</button>
+  </div>
+</div>
+<div id="toast" class="toast"></div>
+<script>
+let points=0, today=0;
+function render(){document.querySelectorAll('#balance,#balance2').forEach(e=>e.textContent=(points/100).toFixed(2));document.querySelectorAll('#points,#points2').forEach(e=>e.textContent=points);document.getElementById('today').textContent=(today/100).toFixed(2)}
+function add(p,txt){points+=p;today+=p;document.getElementById('history').innerHTML='<div>+'+p+' points — '+txt+'</div>';render();toast('+'+p+' points added (demo)')}
+function watch(){toast('ভিডিও চলছে… (ডেমো)');setTimeout(()=>add(500,'Watch Video'),1800)}
+function bonus(){add(100,'Daily Bonus')}
+function show(id,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');if(btn){document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}window.scrollTo(0,0)}
+function toast(t){let x=document.getElementById('toast');x.textContent=t;x.style.display='block';setTimeout(()=>x.style.display='none',1800)}
+render();
+</script>
+</body>
+</html>
